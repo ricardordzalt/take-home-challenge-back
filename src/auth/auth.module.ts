@@ -3,8 +3,8 @@ import { RegisterController } from './register/register.controller';
 import { LoginController } from './login/login.controller';
 import { RegisterService } from './register/register.service';
 import { LoginService } from './login/login.service';
-import { HashService } from './shared/hash.service';
-import { TokenService } from './shared/token.service';
+import { TokenService } from './shared/token/token.service';
+import { HashService } from './shared/hash/hash.service';
 
 @Module({
   controllers: [RegisterController, LoginController],

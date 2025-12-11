@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common/decorators';
+import { Injectable } from '@nestjs/common';
 import { hash, compare } from 'bcrypt';
 
 type Hash = {
