@@ -1,6 +1,6 @@
 import { Injectable, ConflictException } from '@nestjs/common';
 import { HashService } from '../shared/hash/hash.service';
-import { UserRepository } from '../../users/repositories/user.repository';
+import { UserRepository } from 'src/users/repositories/user.repository';
 
 type RegistrationData = {
     email: string;
