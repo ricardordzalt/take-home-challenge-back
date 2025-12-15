@@ -7,6 +7,7 @@ import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/shared/guards/jwt-auth.guard';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { JwtAuthGuard } from './auth/shared/guards/jwt-auth.guard';
     AuthModule,
     UsersModule,
     DatabaseModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [
