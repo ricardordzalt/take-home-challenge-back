@@ -6,13 +6,12 @@ import { LoginService } from './login/login.service';
 import { TokenService } from './shared/token/token.service';
 import { HashService } from './shared/hash/hash.service';
 import { JwtModule } from '@nestjs/jwt';
-import { ConfigService, ConfigModule } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
+import { JwtAuthGuard } from './shared/guards/jwt-auth.guard';
 
 @Module({
   imports: [
-    ConfigModule,
     JwtModule.registerAsync({
-      global: true,
       useFactory: async (configService: ConfigService) => ({
         signOptions: {
           expiresIn: '1h',
@@ -28,6 +27,8 @@ import { ConfigService, ConfigModule } from '@nestjs/config';
     LoginService,
     HashService,
     TokenService,
-  ]
+    JwtAuthGuard,
+  ],
+  exports: [JwtAuthGuard]
 })
 export class AuthModule { }

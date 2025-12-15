@@ -22,7 +22,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     AppService,
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard,
+      useExisting: JwtAuthGuard,
     },
   ],
 })
