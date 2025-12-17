@@ -12,10 +12,26 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
+model users {
   id    String  @id @default(uuid())
   email String  @unique
   password String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  notifications notifications[]
+}
+
+enum NotificationChannel {
+  email
+  sms
+  push_notification
+}
+
+model notifications {
+  id String @id @default(uuid())
+  channel NotificationChannel
+  title String
+  content String
+  userId String
+  user users @relation(fields: [userId], references: [id])
 }
