@@ -12,7 +12,7 @@ import { JwtAuthGuard } from './shared/guards/jwt-auth.guard';
 @Module({
   imports: [
     JwtModule.registerAsync({
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         signOptions: {
           expiresIn: '1h',
         },
@@ -31,4 +31,4 @@ import { JwtAuthGuard } from './shared/guards/jwt-auth.guard';
   ],
   exports: [JwtAuthGuard]
 })
-export class AuthModule { }
+export class AuthModule { } 
