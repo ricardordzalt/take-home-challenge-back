@@ -4,7 +4,7 @@ import { CreateNotificationDto } from './dto/create-notification.dto';
 import { User } from 'src/auth/shared/decorators/user.decorator';
 import type { JwtPayload } from 'src/auth/shared/interfaces/jwt-payload.interface';
 
-@Controller('notifications/create')
+@Controller('notifications')
 export class CreateNotificationController {
   constructor(
     private readonly createNotificationService: CreateNotificationService,
