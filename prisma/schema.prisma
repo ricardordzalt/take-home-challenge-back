@@ -16,8 +16,9 @@ model users {
   id    String  @id @default(uuid())
   email String  @unique
   password String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
   notifications notifications[]
 }
 
@@ -32,6 +33,9 @@ model notifications {
   channel NotificationChannel
   title String
   content String
-  userId String
+  userId String @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
   user users @relation(fields: [userId], references: [id])
 }
