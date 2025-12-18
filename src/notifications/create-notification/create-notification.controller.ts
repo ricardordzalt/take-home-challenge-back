@@ -11,7 +11,7 @@ export class CreateNotificationController {
   ) { }
 
   @Post()
-  async execute(
+  async createNotification(
     @Body() createNotificationDto: CreateNotificationDto,
     @User() user: JwtPayload,
   ) {

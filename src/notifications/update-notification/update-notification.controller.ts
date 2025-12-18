@@ -11,7 +11,7 @@ export class UpdateNotificationController {
   ) { }
 
   @Put(':notificationId')
-  async execute(
+  async updateNotification(
     @Param('notificationId') notificationId: string,
     @Body() updateNotificationBody: UpdateNotificationDto,
     @User() user: JwtPayload,

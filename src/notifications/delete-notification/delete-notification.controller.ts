@@ -10,7 +10,7 @@ export class DeleteNotificationController {
   ) { }
 
   @Delete(':notificationId')
-  async execute(
+  async deleteNotification(
     @Param('notificationId') notificationId: string,
     @User() user: JwtPayload,
   ) {
