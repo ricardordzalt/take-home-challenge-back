@@ -15,6 +15,14 @@ export type CreateNotificationParams = {
   userId: string;
 };
 
+export type UpdateNotificationData = {
+  title?: string;
+  content?: string;
+  channel?: Channel;
+};
+
 export abstract class NotificationsRepository {
   abstract create(data: CreateNotificationParams): Promise<Notification>;
+  abstract update(id: string, data: UpdateNotificationData): Promise<Notification>;
+  abstract findById(id: string): Promise<Notification>;
 }
