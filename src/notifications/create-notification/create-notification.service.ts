@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Channel, NotificationsRepository } from '../repositories/notifications.repository';
 
 type User = {
@@ -21,6 +21,8 @@ type CreateNotificationResponse = {
 
 @Injectable()
 export class CreateNotificationService {
+  private readonly logger = new Logger(CreateNotificationService.name);
+
   constructor(
     private readonly notificationsRepository: NotificationsRepository
   ) { }
@@ -37,6 +39,7 @@ export class CreateNotificationService {
       userId,
     };
     const notification = await this.notificationsRepository.create(notificationData);
+    this.logger.log(`Notification: ${JSON.stringify(notification, null, 3)}, created successfully`);
     const response = {
       message: ['Notification created successfully'],
       statusCode: 201,

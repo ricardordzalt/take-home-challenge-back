@@ -1,5 +1,5 @@
-import { HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { Channel, NotificationsRepository } from '../repositories/notifications.repository';
+import { HttpStatus, Injectable, NotFoundException, UnauthorizedException, Logger } from '@nestjs/common';
+import { NotificationsRepository } from '../repositories/notifications.repository';
 
 type User = {
   id: string;
@@ -12,6 +12,8 @@ type DeleteNotificationResponse = {
 
 @Injectable()
 export class DeleteNotificationService {
+  private readonly logger = new Logger(DeleteNotificationService.name);
+
   constructor(
     private readonly notificationsRepository: NotificationsRepository
   ) { }
@@ -20,14 +22,16 @@ export class DeleteNotificationService {
     user: User,
   ): Promise<DeleteNotificationResponse> {
     const notification = await this.notificationsRepository.findById(notificationId);
-    if(!notification){
+    if (!notification) {
+      this.logger.error(`Notification: ${notificationId}, not found`);
       throw new NotFoundException({ message: ['Notification not found'] });
     }
-    if(notification.userId !== user.id){
+    if (notification.userId !== user.id) {
+      this.logger.error(`User: ${user.id}, is not authorized to delete notification: ${notificationId}`);
       throw new UnauthorizedException({ message: ['You are not authorized to delete this notification'] });
     }
     await this.notificationsRepository.delete(notificationId);
-
+    this.logger.log(`Notification: ${notification.id}, deleted successfully`);
     const response = {
       message: ['Notification deleted successfully'],
       statusCode: HttpStatus.OK,
