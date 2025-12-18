@@ -24,7 +24,7 @@ export class LoginService {
 
     if (!user) {
       this.logger.error('User not found');
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException({ message: ['User not found'] });
     }
 
     const isPasswordValid = await this.hashService.compare({
@@ -34,7 +34,7 @@ export class LoginService {
 
     if (!isPasswordValid) {
       this.logger.error('Invalid password');
-      throw new UnauthorizedException('Invalid password');
+      throw new UnauthorizedException({ message: ['Invalid password'] });
     }
 
     const accessTokenPayload = {

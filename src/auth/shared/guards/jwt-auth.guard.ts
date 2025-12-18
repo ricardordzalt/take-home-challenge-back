@@ -25,7 +25,11 @@ export class JwtAuthGuard implements CanActivate {
         const token = this.extractTokenFromHeader(request);
 
         if (!token) {
-            throw new UnauthorizedException('Token not provided');
+            throw new UnauthorizedException({ 
+                message: ['Token not provided'], 
+                statusCode: 401, 
+                error: 'Unauthorized' 
+            });
         }
 
         try {
@@ -33,7 +37,11 @@ export class JwtAuthGuard implements CanActivate {
             request.user = payload;
             return true;
         } catch (error) {
-            throw new UnauthorizedException('Invalid or expired token');
+            throw new UnauthorizedException({ 
+                message: ['Invalid or expired token'], 
+                statusCode: 401, 
+                error: 'Unauthorized' 
+            });
         }
     }
 

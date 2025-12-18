@@ -2,10 +2,15 @@ import { Injectable, ConflictException } from '@nestjs/common';
 import { HashService } from '../shared/hash/hash.service';
 import { UsersRepository } from 'src/users/repositories/users.repository';
 
-type RegistrationData = {
+type RegisterInput = {
   email: string;
   password: string;
 };
+
+type RegisterResponse = {
+  success: boolean;
+  message: string[];
+}
 
 @Injectable()
 export class RegisterService {
@@ -13,14 +18,14 @@ export class RegisterService {
     private readonly hashService: HashService,
     private readonly usersRepository: UsersRepository,
   ) { }
-  async register(registrationData: RegistrationData): Promise<void> {
-    const user = await this.usersRepository.findByEmail(registrationData.email);
+  async register(registerInput: RegisterInput): Promise<RegisterResponse> {
+    const { password, email } = registerInput || {};
+    const user = await this.usersRepository.findByEmail(email);
     if (user) {
       throw new ConflictException({
-        error: 'USER_ALREADY_EXISTS',
+        message: ['User already exists'],
       });
     }
-    const { password, email } = registrationData || {};
     const hashedPassword = await this.hashService.hash({
       password,
     });
@@ -29,5 +34,11 @@ export class RegisterService {
       email,
       password: hashedPassword,
     });
+
+    const response = { 
+      success: true,
+      message: ['User registered successfully'], 
+    };
+    return response;
   }
 }
