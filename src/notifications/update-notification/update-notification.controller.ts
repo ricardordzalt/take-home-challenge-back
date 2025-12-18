@@ -11,12 +11,12 @@ export class UpdateNotificationController {
   ) { }
 
   @Put(':notificationId')
-  async updateNotification(
+  async execute(
     @Param('notificationId') notificationId: string,
     @Body() updateNotificationBody: UpdateNotificationDto,
     @User() user: JwtPayload,
   ) {
-    return this.updateNotificationService.updateNotification(
+    return this.updateNotificationService.execute(
       notificationId,
       updateNotificationBody,
       user,

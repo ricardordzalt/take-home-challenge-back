@@ -21,7 +21,7 @@ export class UpdateNotificationService {
   constructor(
     private readonly notificationsRepository: NotificationsRepository
   ) { }
-  async updateNotification(
+  async execute(
     notificationId: string,
     updateNotificationData: UpdateNotificationData,
     user: User,

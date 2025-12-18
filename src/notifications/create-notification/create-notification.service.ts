@@ -24,7 +24,7 @@ export class CreateNotificationService {
   constructor(
     private readonly notificationsRepository: NotificationsRepository
   ) { }
-  async createNotification(
+  async execute(
     user: User,
     createNotificationData: createNotificationData,
   ): Promise<CreateNotificationResponse> {

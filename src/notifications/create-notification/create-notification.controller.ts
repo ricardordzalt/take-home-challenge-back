@@ -11,11 +11,11 @@ export class CreateNotificationController {
   ) { }
 
   @Post()
-  async createNotification(
+  async execute(
     @Body() createNotificationDto: CreateNotificationDto,
     @User() user: JwtPayload,
   ) {
-    return this.createNotificationService.createNotification(
+    return this.createNotificationService.execute(
       user,
       createNotificationDto,
     );

@@ -18,7 +18,7 @@ export class RegisterService {
     private readonly hashService: HashService,
     private readonly usersRepository: UsersRepository,
   ) { }
-  async register(registerInput: RegisterInput): Promise<RegisterResponse> {
+  async execute(registerInput: RegisterInput): Promise<RegisterResponse> {
     const { password, email } = registerInput || {};
     const user = await this.usersRepository.findByEmail(email);
     if (user) {

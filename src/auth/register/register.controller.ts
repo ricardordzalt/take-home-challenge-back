@@ -10,7 +10,7 @@ export class RegisterController {
     @Public()
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async register(@Body() registerBody: RegisterDto) {
-        return this.registerService.register(registerBody);
+    async execute(@Body() registerBody: RegisterDto) {
+        return this.registerService.execute(registerBody);
     }
 }

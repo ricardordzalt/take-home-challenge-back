@@ -9,9 +9,9 @@ export class LoginController {
 
     @Public()
     @Post()
-    async login(
+    async execute(
         @Body() loginBody: LoginDto,
     ) {
-        return this.loginService.login(loginBody);
+        return this.loginService.execute(loginBody);
     }
 }

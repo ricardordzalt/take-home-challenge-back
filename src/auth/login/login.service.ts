@@ -18,7 +18,7 @@ export class LoginService {
     private readonly tokenService: TokenService,
   ) { }
 
-  async login(loginData: LoginData) {
+  async execute(loginData: LoginData) {
     const { email, password } = loginData;
     const user = await this.usersRepository.findByEmail(email);
 
