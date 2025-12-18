@@ -38,8 +38,9 @@ export class CreateNotificationService {
       channel,
       userId,
     };
+    this.logger.log(`Creating notification data: ${JSON.stringify(notificationData, null, 3)}`);
     const notification = await this.notificationsRepository.create(notificationData);
-    this.logger.log(`Notification: ${JSON.stringify(notification, null, 3)}, created successfully`);
+    this.logger.log(`Notification: ${notification.id}, created successfully`);
     const response = {
       message: ['Notification created successfully'],
       statusCode: 201,
