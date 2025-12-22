@@ -7,6 +7,10 @@ import { DeleteNotificationService } from './delete-notification/delete-notifica
 import { DeleteNotificationController } from './delete-notification/delete-notification.controller';
 import { GetNotificationsService } from './get-notifications/get-notifications.service';
 import { GetNotificationsController } from './get-notifications/get-notifications.controller';
+import { EmailNotificationStrategy } from './strategies/email-notification.strategy';
+import { SmsNotificationStrategy } from './strategies/sms-notification.strategy';
+import { PushNotificationStrategy } from './strategies/push-notification.strategy';
+import { NotificationStrategy } from './strategies/notification-strategy';
 
 @Module({
   providers: [
@@ -14,6 +18,18 @@ import { GetNotificationsController } from './get-notifications/get-notification
     UpdateNotificationService,
     DeleteNotificationService,
     GetNotificationsService,
+    EmailNotificationStrategy,
+    SmsNotificationStrategy,
+    PushNotificationStrategy,
+    {
+      provide: NotificationStrategy,
+      useFactory: (
+        emailStrategy: EmailNotificationStrategy,
+        smsStrategy: SmsNotificationStrategy,
+        pushStrategy: PushNotificationStrategy,
+      ) => [emailStrategy, smsStrategy, pushStrategy],
+      inject: [EmailNotificationStrategy, SmsNotificationStrategy, PushNotificationStrategy],
+    },
   ],
   controllers: [
     CreateNotificationController,
@@ -22,4 +38,4 @@ import { GetNotificationsController } from './get-notifications/get-notification
     GetNotificationsController
   ]
 })
-export class NotificationsModule {}
+export class NotificationsModule { }
