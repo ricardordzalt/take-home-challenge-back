@@ -1,5 +1,5 @@
-import { HttpStatus, Injectable, NotFoundException, UnauthorizedException, Logger } from '@nestjs/common';
-import { Channel, NotificationsRepository } from '../repositories/notifications.repository';
+import { HttpStatus, Injectable, NotFoundException, ForbiddenException, Logger } from '@nestjs/common';
+import { Channel, Notification, NotificationsRepository } from '../repositories/notifications.repository';
 
 type User = {
   id: string;
@@ -13,6 +13,7 @@ type UpdateNotificationData = {
 
 type UpdateNotificationResponse = {
   message: string[];
+  notification: Notification;
   statusCode: HttpStatus;
 };
 
@@ -33,14 +34,18 @@ export class UpdateNotificationService {
       this.logger.error(`Notification: ${notificationId}, not found`);
       throw new NotFoundException({ message: ['Notification not found'] });
     }
+
     if (notification.userId !== user.id) {
       this.logger.error(`User: ${user.id}, is not authorized to update notification: ${notificationId}`);
-      throw new UnauthorizedException({ message: ['You are not authorized to update this notification'] });
+      throw new ForbiddenException({ message: ['You are not authorized to update this notification'] });
     }
-    await this.notificationsRepository.update(notificationId, updateNotificationData);
+
+    const updatedNotification = await this.notificationsRepository.update(notificationId, updateNotificationData);
     this.logger.log(`Notification: ${notificationId}, updated successfully with ${JSON.stringify(updateNotificationData, null, 3)}`);
+
     const response = {
       message: ['Notification updated successfully'],
+      notification: updatedNotification,
       statusCode: HttpStatus.OK,
     }
     return response;
