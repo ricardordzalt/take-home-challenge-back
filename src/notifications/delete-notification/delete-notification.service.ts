@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, NotFoundException, UnauthorizedException, Logger } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException, Logger, ForbiddenException } from '@nestjs/common';
 import { NotificationsRepository } from '../repositories/notifications.repository';
 
 type User = {
@@ -28,7 +28,7 @@ export class DeleteNotificationService {
     }
     if (notification.userId !== user.id) {
       this.logger.error(`User: ${user.id}, is not authorized to delete notification: ${notificationId}`);
-      throw new UnauthorizedException({ message: ['You are not authorized to delete this notification'] });
+      throw new ForbiddenException({ message: ['You are not authorized to delete this notification'] });
     }
     await this.notificationsRepository.delete(notificationId);
     this.logger.log(`Notification: ${notification.id}, deleted successfully`);
