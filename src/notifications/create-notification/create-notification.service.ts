@@ -40,8 +40,12 @@ export class CreateNotificationService {
     user: User,
     createNotificationData: createNotificationData,
   ): Promise<CreateNotificationResponse> {
-    const { channel } = createNotificationData || {};
-    const { id: userId } = user || {};
+    if (!createNotificationData || !user) {
+      this.logger.error('Invalid notification data or user');
+      throw new BadRequestException('Invalid notification data or user');
+    }
+    const { channel } = createNotificationData;
+    const { id: userId } = user;
 
     await this.sendNotification({ createNotificationData, userId });
 
