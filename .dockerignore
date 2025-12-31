@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+.git
+# .env and .env.test are intentionally included to be part of the image
+# .env
+# .env.test
+npm-debug.log
+Dockerfile
+docker-compose.yml
+.dockerignore
+run.sh
